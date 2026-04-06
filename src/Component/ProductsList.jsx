@@ -24,6 +24,7 @@ function ProductsList() {
   useEffect(() => {
     fetchProducts();
   }, [item]);
+
   console.log("get items:", item);
 
   console.log("  filteritems:", filteritems);
@@ -47,7 +48,7 @@ function ProductsList() {
                 {products.map((product) => (
                   <tr key={product.id}>
                     <td scope="row">
-                      <Link to ={`/product/${product.id}`}>
+                      <Link to ={`/product/${product.id}`} className="text-decoration-none text-dark">
                         <img
                           src={product.thumbnail}
                           alt={product.title}
@@ -56,7 +57,7 @@ function ProductsList() {
                       </Link>
                     </td>
                     <td>
-                      <Link>
+                      <Link to ={`/product/${product.id}`} className="text-decoration-none text-dark">
                         <div>
                           <h3>{product.title}</h3>
                           <p>
@@ -72,7 +73,7 @@ function ProductsList() {
                       </Link>
                     </td>
                     <td>
-                      <Link>${product.price.toFixed(2)}</Link>
+                      <Link to ={`/product/${product.id}`} className="text-decoration-none text-dark">${product.price.toFixed(2)}</Link>
                     </td>
                   </tr>
                 ))}
