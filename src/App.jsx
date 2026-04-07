@@ -8,6 +8,9 @@ import ProductsList from "./Component/ProductsList";
 import Product from "./Component/Product";
 import ProductDetails from "./Component/ProductDetails";
 import Category from "./Component/Category";
+import ProductTab from "./Component/ProductTab";
+import ProductReview from "./Component/ProductReview";
+import Cart from "./Component/Cart";
 
 function App() {
   return (
@@ -19,7 +22,14 @@ function App() {
         <Route path="/contactus/" element={<Contact />} />
         <Route path="/products/:item" element={<ProductsList />} />
         <Route path="/categories/" element={<Category />} />
-        <Route path="/product/:id" element={<Product />} />
+        {/* <Route path="/product/:id" element={<Product />} />
+        <Route path="/productdetails/:id" element={<ProductDetails />} />
+        <Route path="/review/:id" element={<ProductReview />} /> */}
+        <Route path="/product/:id" element={<Product />}>
+          <Route index element={<ProductDetails />} />
+          <Route path="reviews" element={<ProductReview />} />
+        </Route>
+        <Route path="/cart/:itemId/:quantity" element={<Cart/>}/>
       </Routes>
     </>
   );
