@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 function Cart() {
   const { quantity } = useParams();
@@ -149,10 +149,8 @@ function Cart() {
                           {product?.discountPercentage > 0 && (
                             <small className="text-success">
                               You save{" "}
-                              {(
-                                (mrpPrice || 0) - product.price
-                              ).toFixed(2)}{" "}
-                              per item
+                              {((mrpPrice || 0) - product.price).toFixed(2)} per
+                              item
                             </small>
                           )}
                         </div>
@@ -217,7 +215,7 @@ function Cart() {
                   </small>
                   <small> $ </small>
                   <span className="fw-bolder">
-                    {((product.price* qty)+shpFees).toFixed(2)}
+                    {(product.price * qty + shpFees).toFixed(2)}
                   </span>
                 </div>
               </div>
@@ -231,7 +229,7 @@ function Cart() {
                     {(
                       Number(mrpPrice) * qty +
                       shpFees -
-                      ((product.price* qty)+shpFees)
+                      (product.price * qty + shpFees)
                     ).toFixed(2)}
                   </span>
                 </div>
@@ -244,14 +242,16 @@ function Cart() {
                 <div className="col-6">
                   <small className="fw-bold"> $ </small>
                   <span className="fw-bold text-success">
-                    {((product.price* qty)+shpFees).toFixed(2)}
+                    {(product.price * qty + shpFees).toFixed(2)}
                   </span>
                 </div>
                 {/* place button */}
                 <div className="col-6 text-end ">
-                  <button className="btn btn-warning fw-bold px-5 ">
-                    Place Order
-                  </button>
+                  <Link to={`/order/`}>
+                    <button className="btn btn-warning fw-bold px-5 ">
+                      Place Order
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

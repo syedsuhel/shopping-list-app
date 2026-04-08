@@ -11,6 +11,7 @@ import Category from "./Component/Category";
 import ProductTab from "./Component/ProductTab";
 import ProductReview from "./Component/ProductReview";
 import Cart from "./Component/Cart";
+import OrderPlaced from "./Component/OrderPlaced";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="reviews" element={<ProductReview />} />
         </Route>
         <Route path="/cart/:quantity" element={<Cart/>}/>
+        <Route path="/order/" element={<OrderPlaced/>}/>
       </Routes>
     </>
   );
