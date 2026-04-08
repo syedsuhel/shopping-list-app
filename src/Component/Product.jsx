@@ -5,9 +5,9 @@ import ProductTab from "./ProductTab";
 
 function Product() {
   const { id } = useParams();
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState({});
 
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const fetchProduct = async () => {
     try {
@@ -20,10 +20,10 @@ function Product() {
   };
   //   quatity counts
   const qtyPlus = () => {
-    setQuantity((count) => Math.min(product.minimumOrderQuantity, count + 1));
+    setQuantity((count) => Math.min(product.stock || 1, count + 1));
   };
   const qtyMinus = () => {
-    setQuantity((count) => Math.max(0, count - 1));
+    setQuantity((count) => Math.max(1, count - 1));
   };
 
   useEffect(() => {
@@ -48,11 +48,11 @@ function Product() {
           </div>
           {/* ->Product Brief Details */}
           <div className="col-6">
-            <div className="contailer">
+            <div className="container">
               {/* ->Product Brief Details */}
               <div className="row">
-                <div className="col-12 w-75">
-                    {/* ->Brand name */}
+                <div className="col-12 ">
+                  {/* ->Brand name */}
                   <p>
                     <strong>Brand:</strong> {product.brand}
                   </p>
@@ -65,7 +65,14 @@ function Product() {
                   </div>
                   {/* ->Rating */}
                   <div>
-                    <i className="fa-solid fa-star me-1 text-warning"></i><strong className={product.rating>=3?"text-success":"text-danger"}>{product.rating }</strong>
+                    <i className="fa-solid fa-star me-1 text-warning"></i>
+                    <strong
+                      className={
+                        product.rating >= 3 ? "text-success" : "text-danger"
+                      }
+                    >
+                      {product.rating}
+                    </strong>
                   </div>
                 </div>
               </div>
@@ -84,10 +91,12 @@ function Product() {
                     {/*  Old Price */}
                     <span className="text-muted text-decoration-line-through fs-5">
                       $
-                      {(
-                        product.price /
-                        (1 - product.discountPercentage / 100)
-                      ).toFixed(2)}
+                      {product.price && product.discountPercentage
+                        ? (
+                            product.price /
+                            (1 - product.discountPercentage / 100)
+                          ).toFixed(2)
+                        : ""}
                     </span>
 
                     {/* Discount Badge */}
@@ -178,7 +187,8 @@ function Product() {
                   </div>
                   {/* ->Buy Now */}
                   <Link
-                    to={`/cart/${product.id}/${quantity}`}
+                    to={`/cart/${quantity}`}
+                    state={{ product: product }}
                     style={{ textDecoration: "none" }}
                   >
                     <div className="row mt-5 ">
