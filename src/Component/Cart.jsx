@@ -6,6 +6,7 @@ function Cart() {
   const { state } = useLocation();
   const [qty, setQty] = useState(Number(quantity));
 
+  const product = state?.product;
   //   quatity counts
   const qtyPlus = () => {
     setQty((count) => Math.min(product.stock || 1, count + 1));
@@ -13,7 +14,7 @@ function Cart() {
   const qtyMinus = () => {
     setQty((count) => Math.max(1, count - 1));
   };
-  const product = state?.product;
+  
 
   const shpFees = product.fees ?? 7;
 
@@ -247,7 +248,7 @@ function Cart() {
                 </div>
                 {/* place button */}
                 <div className="col-6 text-end ">
-                  <Link to={`/order/`}>
+                  <Link to={`/order/`} state={{product:product}}>
                     <button className="btn btn-warning fw-bold px-5 ">
                       Place Order
                     </button>
