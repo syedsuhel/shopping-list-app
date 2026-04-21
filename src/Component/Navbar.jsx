@@ -1,6 +1,12 @@
 import React from "react";
+import { useCart } from "./CartContext";
+import { Link } from "react-router-dom";
 
 function Navbar() {
+  const { cartItems } = useCart();
+
+  const cartCount = cartItems.length;
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
@@ -37,6 +43,18 @@ function Navbar() {
               </a>
             </li>
           </ul>
+          {/* Cart Icon */}
+          <Link
+            to="/cart/"
+            className="btn btn-outline-primary position-relative"
+          >
+            <i className="fa-solid fa-shopping-cart"></i> Cart
+            {cartCount > 0 && (
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {cartCount}
+              </span>
+            )}
+          </Link>
         </div>
       </div>
     </nav>

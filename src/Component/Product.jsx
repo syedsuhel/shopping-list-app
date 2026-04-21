@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Navigate, Outlet, useParams } from "react-router-dom";
 import ProductTab from "./ProductTab";
+import { useCart } from "./CartContext";
 
 function Product() {
   const { id } = useParams();
+  const { addToCart } = useCart();
   const [product, setProduct] = useState({});
 
   const [quantity, setQuantity] = useState(1);
+  const [addedTocart, setAddedToCart] = useState(false);
 
   const fetchProduct = async () => {
     try {
@@ -24,6 +27,21 @@ function Product() {
   };
   const qtyMinus = () => {
     setQuantity((count) => Math.max(1, count - 1));
+  };
+
+  //   Handle Add to Cart
+  const handleAddtoCart = () => {
+    addToCart(product, quantity);
+    setAddedToCart(true);
+    // reset message after 2 sec
+    setTimeout(() => {
+      setAddedToCart(false);
+    }, 2000);
+  };
+
+  // Handle Buy Now - redirects to cart
+  const handleBuyNow = () => {
+    addToCart(product, quantity);
   };
 
   useEffect(() => {
@@ -185,23 +203,37 @@ function Product() {
                       </div>
                     </div>
                   </div>
-                  {/* ->Buy Now */}
-                  <Link
-                    to={`/cart/${quantity}`}
-                    state={{ product: product }}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <div className="row mt-5 ">
-                      <div className="col-12 ">
-                        <div className="btn btn-warning rounded-pill d-flex justify-content-center gap-2 align-items-center sticky-bottom">
-                          <span className="fw-bold text-white"> Buy at</span>{" "}
-                          <span className="text-danger fs-4 fw-bolder ">
-                            ${product.price}
-                          </span>
-                        </div>
-                      </div>
+                  {/* ->addTocart and Buy Now */}
+                  <div className="row mt-4 g-2">
+                    {/* add to cart */}
+                    <div className="col-6">
+                      <button
+                        onClick={handleAddtoCart}
+                        className="btn btn-outline-warning rounded-pill d-flex justify-content-center gap-2 align-items-center w-100 fw-bold"
+                      >
+                        <i className="fa-solid fa-shopping-cart"></i>
+                        Add to Cart
+                      </button>
+                      {addedTocart && (
+                        <p className="text-success text-center mt-2 small">
+                          ✓ Added to cart!
+                        </p>
+                      )}
                     </div>
-                  </Link>
+
+                    {/* Buy Now Button */}
+                    <div className="col-6">
+                      <Link to="/cart/" style={{ textDecoration: "none" }}>
+                        <button
+                          onClick={handleBuyNow}
+                          className="btn btn-warning rounded-pill d-flex justify-content-center gap-2 align-items-center w-100 fw-bold text-white"
+                        >
+                          <i className="fa-solid fa-bolt"></i>
+                          Buy Now
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

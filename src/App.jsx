@@ -12,10 +12,12 @@ import ProductTab from "./Component/ProductTab";
 import ProductReview from "./Component/ProductReview";
 import Cart from "./Component/Cart";
 import OrderPlaced from "./Component/OrderPlaced";
+import CartProvider from "./Component/CartContext";
 
 function App() {
   return (
     <>
+    <CartProvider>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -30,9 +32,10 @@ function App() {
           <Route index element={<ProductDetails />} />
           <Route path="reviews" element={<ProductReview />} />
         </Route>
-        <Route path="/cart/:quantity" element={<Cart/>}/>
+        <Route path="/cart/" element={<Cart/>}/>
         <Route path="/order/" element={<OrderPlaced/>}/>
       </Routes>
+      </CartProvider>
     </>
   );
 }
