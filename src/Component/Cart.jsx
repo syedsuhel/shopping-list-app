@@ -91,8 +91,10 @@ function Cart() {
 
     // Step 6: Navigate to order page
     navigate("/order/");
-  };
 
+   
+  };
+   localStorage.clear()
   // Empty cart state
   if (cartItems.length === 0) {
     return (
@@ -110,7 +112,7 @@ function Cart() {
 
     
   }
- 
+ localStorage.removeItem("orders")
 
   console.log(
     "cart item quantity:",

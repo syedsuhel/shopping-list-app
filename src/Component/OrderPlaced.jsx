@@ -151,7 +151,7 @@ function OrderPlaced() {
             <Link to="/my-orders" className="btn btn-info rounded-pill">
               <i className="fa-solid fa-history"></i> My Orders
             </Link>
-            <Link to="/" className="btn btn-outline-primary rounded-pill">
+            <Link to="/" className="btn btn-outline-primary rounded-pill" >
               <i className="fa-solid fa-shopping-bag"></i> Continue Shopping
             </Link>
           </div>
